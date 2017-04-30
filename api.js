@@ -51,11 +51,125 @@ router.get('/search/:keywords', (req, res, next) => {
     .then(result => res.json(result));
 });
 
-// 网易云新歌榜api
-const toplistNewUrl = 'http://music.163.com/api/playlist/detail?id=3779629';
+// 网易云排行榜api
+const toplists = [
+  {
+    name: '云音乐新歌榜', 
+    id: '3779629',
+    image: 'http://p3.music.126.net/N2HO5xfYEqyQ8q6oxCw8IQ==/18713687906568048.jpg?param=90y90'
+  },
+  {
+    name: '云音乐热歌榜', 
+    id: '3778678',
+    image: ''
+  },
+  {
+    name: '网易原创歌曲榜', 
+    id: '2884035',
+    image: ''
+  },
+  {
+    name: '云音乐飙升榜', 
+    id: '19723756',
+    image: ''
+  },
+  {
+    name: '云音乐电音榜', 
+    id: '10520166',
+    image: ''
+  },
+  {
+    name: '美国Billboard周榜', 
+    id: '60198',
+    image: ''
+  },
+  {
+    name: 'UK排行榜周榜', 
+    id: '180106',
+    image: ''
+  },
+  {
+    name: 'KTV嗨榜', 
+    id: '21845217',
+    image: ''
+  },
+  {
+    name: 'iTunes榜', 
+    id: '11641012',
+    image: ''
+  },
+  {
+    name: 'Hit FM Top榜', 
+    id: '120001',
+    image: ''
+  },
+  {
+    name: '日本Oricon周榜', 
+    id: '60131',
+    image: ''
+  },
+  {
+    name: '韩国Melon排行榜周榜', 
+    id: '3733003',
+    image: ''
+  },
+  {
+    name: '韩国Mnet排行榜周榜', 
+    id: '60255',
+    image: ''
+  },
+  {
+    name: '韩国Melon原声周榜', 
+    id: '46772709',
+    image: ''
+  },
+  {
+    name: '中国TOP排行榜(港台榜)', 
+    id: '112504',
+    image: ''
+  },
+  {
+    name: '中国TOP排行榜(内地榜)', 
+    id: '64016',
+    image: ''
+  },
+  {
+    name: '香港电台中文歌曲龙虎榜', 
+    id: '10169002',
+    image: ''
+  },
+  {
+    name: '华语金曲榜', 
+    id: '4395559',
+    image: ''
+  },
+  {
+    name: '中国嘻哈榜', 
+    id: '1899724',
+    image: ''
+  },
+  {
+    name: '法国 NRJ EuroHot 30周榜', 
+    id: '27135204',
+    image: ''
+  },
+  {
+    name: '台湾Hito排行榜', 
+    id: '112463',
+    image: ''
+  },
+  {
+    name: 'Beatport全球电子舞曲榜', 
+    id: '3812895',
+    image: ''
+  }
+];
 
-router.get('/toplist/new/:num', (req, res, next) => {
-  return fetch(toplistNewUrl)
+const toplistUrl = 'http://music.163.com/api/playlist/detail?id=';
+
+router.get('/toplist/:id/:num', (req, res, next) => {
+  let searchId = toplists[req.params.id].id;
+  return fetch(toplistUrl + searchId)
     .then(response => response.json())
     .then(response => {
       let num = req.params.num;
