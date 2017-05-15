@@ -34,6 +34,15 @@ app.use((err, req, res, next) => {
     res.status(500).send('Server Error!');
 });
 
-app.listen(3000, () => {
-  console.log('Listening at http://localhost:3000');
+// https
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+  key: fs.readFileSync('./private/214080987710559.key', 'utf8'),
+  cert: fs.readFileSync('./private/214080987710559.pem', 'utf8')
+};
+
+https.createServer(options, app).listen(443, '112.74.90.33', () => {
+  console.log('Listening at https://112.74.90.33:443');
 });
